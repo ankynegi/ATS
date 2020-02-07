@@ -10,38 +10,38 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
 
-	private WebDriver dr;
+	private WebDriver drvr;
 	public LoginPage(WebDriver driver){
-		this.dr=driver;
-		PageFactory.initElements(dr, this);
+		this.drvr=driver;
+		PageFactory.initElements(drvr, this);
 	}
 	
 	@FindBy(css="[name='username']")
 	private WebElement user;
 	
 	@FindBy(css="[name='password']")
-	private WebElement pass;
+	private WebElement passwd;
 	
 	@FindBy(css="button[type='submit'] > span")
-	private WebElement submit;
+	private WebElement login;
 	
 
-	public void loginToApplication(String username, String password)
+	public void loginToPage(String username, String pass)
 	{
 		waitForElementVisible(user);
 		user.sendKeys(username);
-		pass.sendKeys(password);
-		submit.click();
+		passwd.sendKeys(pass);
+		login.click();
 	}
 	
 public void waitForElementClickable(WebElement element) {
 		
-		WebDriverWait wait=new WebDriverWait(dr, 10);
+		WebDriverWait wait=new WebDriverWait(drvr, 10);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 public void waitForElementVisible(WebElement element) {
 	
-	WebDriverWait wait=new WebDriverWait(dr, 10);
+	WebDriverWait wait=new WebDriverWait(drvr, 10);
 	wait.until(ExpectedConditions.visibilityOf(element));
 }
 }

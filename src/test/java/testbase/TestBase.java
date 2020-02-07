@@ -37,7 +37,7 @@ import utilities.TestUtility;
 
 public class TestBase {
 	static Logger logger = Logger.getLogger(TestBase.class);
-	private WebDriver dr;
+	private WebDriver drvr;
 	public String cbrowser;
 	private final int time=20;
 	private String url;
@@ -77,20 +77,20 @@ public class TestBase {
 		    key="webdriver.chrome.driver";
 			value=constant.chromeAgent;
 			System.setProperty(key, value);
-			dr=new ChromeDriver(opt);
+			drvr=new ChromeDriver(opt);
 			
 			break;
 		case "firefox":
 			key="webdriver.gecko.driver";
 			value=constant.ffAgent;
 			System.setProperty(key, value);
-			dr=new FirefoxDriver();
+			drvr=new FirefoxDriver();
 			break;
 		case "ie":
 			key="webdriver.ie.driver";
 			value=constant.ieAgent;
 			System.setProperty(key, value);
-			dr=new InternetExplorerDriver();
+			drvr=new InternetExplorerDriver();
 			break;
 		
 		default: Throwable t= new Throwable();
@@ -98,40 +98,40 @@ public class TestBase {
 				
 		}
 		logger.info("Opened "+cbrowser+" Browser");
-		dr.manage().window().maximize();
-		dr.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		dr.get(url.trim());
+		drvr.manage().window().maximize();
+		drvr.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		drvr.get(url.trim());
 		logger.info("Opened "+url+":");
 		
 		
 		
-		return dr;
+		return drvr;
 	}
 	public void scrollToElement(WebElement element) throws InterruptedException {
-		((JavascriptExecutor)dr).executeScript("arguments[0].scrollIntoView(true);", element);
+		((JavascriptExecutor)drvr).executeScript("arguments[0].scrollIntoView(true);", element);
 		Thread.sleep(2000);
-		((JavascriptExecutor)dr).executeScript("window.scrollBy(0,-300)", "");
+		((JavascriptExecutor)drvr).executeScript("window.scrollBy(0,-300)", "");
 	}
 	
 	public void CaptureScreen() throws IOException {
-		TakesScreenshot ts=(TakesScreenshot) dr;
+		TakesScreenshot ts=(TakesScreenshot) drvr;
 		 File file = ts.getScreenshotAs(OutputType.FILE);
 		 FileHandler.copy(file, new File("./screenShots/"+TestUtility.getTimeStamp()+"_image.png"));
 	}
 	
 	public void waitForElementClickable(WebElement element) {
 		
-		WebDriverWait wait=new WebDriverWait(dr, time);
+		WebDriverWait wait=new WebDriverWait(drvr, time);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 	public void waitForElementVisible(WebElement element) {
 		
-		WebDriverWait wait=new WebDriverWait(dr, time);
+		WebDriverWait wait=new WebDriverWait(drvr, time);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	
 	public void handleAlter() {
-		Alert al=dr.switchTo().alert();
+		Alert al=drvr.switchTo().alert();
 		System.out.println(al.getText());
 		al.dismiss();
 	}

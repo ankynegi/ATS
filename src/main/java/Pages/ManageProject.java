@@ -11,52 +11,52 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ManageProject {
 
-	WebDriver dr;
-	CreateProject c=new CreateProject(dr);
+	WebDriver drvr;
+	CreateProject c=new CreateProject(drvr);
 	public ManageProject(WebDriver driver)
 	{
-		this.dr=driver;
-		PageFactory.initElements(dr, this);
+		this.drvr=driver;
+		PageFactory.initElements(drvr, this);
 	}
 	
 	@FindBy(xpath="//*[@title='Manage Projects']/descendant::span[text()='Manage Projects']")
-	private WebElement manageProject;
+	private WebElement managePrjct;
 	
 	@FindBy(xpath="//table/tbody/tr/td/div/div/div/a[text()='Kozey Solution']")
-	private WebElement projectName;
+	private WebElement prjctName;
 	
 	private void clickOnManageProject() {
-		waitForElementClickable(manageProject);
+		waitForElementClickable(managePrjct);
 		//manageProject.click();
-		new Actions(dr).pause(5000).perform();
-		new Actions(dr).click(manageProject).perform();
+		new Actions(drvr).pause(5000).perform();
+		new Actions(drvr).click(managePrjct).perform();
 		}
 	
 	public boolean verifyProjectCreated() 
 	{
-		boolean b=false;
+		boolean flag=false;
 		clickOnManageProject();
-		WebElement readName=dr.findElement(By.xpath("//table/tbody/tr/td/div/div/div/a[text()='"+c.readProjectName()+"']"));
+		WebElement readName=drvr.findElement(By.xpath("//table/tbody/tr/td/div/div/div/a[text()='"+c.readProjectName()+"']"));
 		try {
 			waitForElementVisible(readName);
-			b=readName.isDisplayed();
+			flag=readName.isDisplayed();
 		}catch(Exception e) {}
-		return b;
+		return flag;
 		
 	}
 	
 	public String getProjectNameFromApp() {
-		return dr.findElement(By.xpath("//table/tbody/tr/td/div/div/div/a[text()='"+c.readProjectName()+"']")).getText();
+		return drvr.findElement(By.xpath("//table/tbody/tr/td/div/div/div/a[text()='"+c.readProjectName()+"']")).getText();
 	}
 	public void waitForElementVisible(WebElement element) 
 	{			
-				WebDriverWait wait=new WebDriverWait(dr, 10);
+				WebDriverWait wait=new WebDriverWait(drvr, 10);
 				wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	
 	public void waitForElementClickable(WebElement element) 
 	{
-			WebDriverWait wait=new WebDriverWait(dr, 10);
+			WebDriverWait wait=new WebDriverWait(drvr, 10);
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 	

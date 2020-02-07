@@ -20,7 +20,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 
 public class LoginTest {
-	WebDriver dr;
+	WebDriver drvr;
 	TestBase tb;
 	LoginPage lp;
 	CreateProject cp;
@@ -31,7 +31,7 @@ public class LoginTest {
   public void creatNewProject() throws InterruptedException {
 	  String username=ExcelUtility.getCellData("userInfo", "username", 1);
 	  String password=ExcelUtility.getCellData("userInfo", "password", 2);
-	  lp.loginToApplication(username,password);
+	  lp.loginToPage(username,password);
 	  assertTrue(cp.verifyDashboard());
 	  cp.clickOnNewPoject();
 	  assertTrue(cp.verifyCreateProjectScreean());
@@ -62,15 +62,15 @@ public class LoginTest {
   @BeforeMethod
   public void beforeMethod() throws IOException {
 	  tb = new TestBase();
-	  dr=tb.getInstance();
-	  lp=new LoginPage(dr);
-	  cp=new CreateProject(dr);
-	  mp=new ManageProject(dr);
+	  drvr=tb.getInstance();
+	  lp=new LoginPage(drvr);
+	  cp=new CreateProject(drvr);
+	  mp=new ManageProject(drvr);
   }
 
   @AfterMethod
   public void afterMethod() {
-	  //dr.quit();
+
   }
 
 }
