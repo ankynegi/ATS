@@ -18,17 +18,17 @@ import com.github.javafaker.Faker;
 
 public class CreateProject {
 
-	WebDriver dr;
+	WebDriver drvr;
 	public CreateProject(WebDriver driver){
-		this.dr=driver;
-		PageFactory.initElements(dr, this);
+		this.drvr=driver;
+		PageFactory.initElements(drvr, this);
 	}
 	
 	@FindBy(xpath="//*[starts-with(text(),'New Project')]")
-	private WebElement newProject;
+	private WebElement newPrjct;
 	
 	@FindBy(xpath="//*[starts-with(text(),'Project Name')]/parent::div/descendant::input")
-	private WebElement projectName;
+	private WebElement prjctName;
 	
 	@FindBy(xpath="//h6[text()='Create New Project']")
 	private WebElement createNewProject;
@@ -38,22 +38,22 @@ public class CreateProject {
 	private WebElement country;
 	
 	@FindBy(xpath="//*[contains(@id,'react-autowhatever-') and contains(@id,'item-0')]")
-	private WebElement countryList;
+	private WebElement listOFCountry;
 	
 	@FindBy(xpath="//*[starts-with(text(),'State')]/parent::div/descendant::input")
 	private WebElement state;
 	
 	@FindBy(xpath="//*[contains(@id,'react-autowhatever-') and contains(@id,'item-0')]")
-	private WebElement stateList;
+	private WebElement listOFStates;
 	
 	@FindBy(xpath="//*[starts-with(text(),'City')]/parent::div/descendant::input")
 	private WebElement city;
 	
 	@FindBy(xpath="//*[contains(@id,'react-autowhatever-') and contains(@id,'item-0')]")
-	private WebElement cityList;
+	private WebElement listOfCity;
 	
 	@FindBy(xpath="//*[starts-with(text(),'Address')]/parent::div/descendant::textarea[@aria-invalid='false']")
-	private WebElement address;
+	private WebElement addrs;
 	
 	@FindBy(xpath="//*[starts-with(text(),'Bid Date')]/parent::div/descendant::input")
 	private WebElement date;
@@ -77,26 +77,26 @@ public class CreateProject {
 	private WebElement mall;
 	
 	Faker faker = new Faker();
-	private static String project;
+	private static String prjct;
 	
 	public void clickOnNewPoject(){
-		newProject.click();
+		newPrjct.click();
 	}
 	public void enterBasicProjectDetails(){
-		projectName.sendKeys(getProjectName());
+		prjctName.sendKeys(getProjectName());
 	} 
 	
 	public void enterBasicProjectDetails(String projectname){
-		projectName.sendKeys(projectname);
+		prjctName.sendKeys(projectname);
 	} 
 	private String getProjectName(){
-		project = faker.lastName()+" " + "Solution";
-		return project;
+		prjct = faker.lastName()+" " + "Solution";
+		return prjct;
 	}
 	public boolean verifyDashboard(){
 		boolean b=false;
 		try{
-			b=newProject.isDisplayed();
+			b=newPrjct.isDisplayed();
 		}catch(Exception e){
 			
 		}
@@ -115,20 +115,20 @@ public class CreateProject {
 	}
 	
 	
-	public void enterCountry(String cut) 
+	public void enterCountry(String cntry)
 	{
 
-		country.sendKeys(Keys.chord(cut));
-		waitForElementVisible(countryList);
-		countryList.click();
+		country.sendKeys(Keys.chord(cntry));
+		waitForElementVisible(listOFCountry);
+		listOFCountry.click();
 	}
 	
-	public void enterState(String st)
+	public void enterState(String states)
 	{
 
-		state.sendKeys(Keys.chord(st));
-		waitForElementVisible(stateList);
-		stateList.click();
+		state.sendKeys(Keys.chord(states));
+		waitForElementVisible(listOFStates);
+		listOFStates.click();
 	}
 	
 	public void enterCity(String cty) throws InterruptedException
@@ -138,30 +138,30 @@ public class CreateProject {
 		city.sendKeys(Keys.chord(cty));
 		
 		try {
-			waitForElementVisible(cityList);
-			b=cityList.isDisplayed();
+			waitForElementVisible(listOfCity);
+			b=listOfCity.isDisplayed();
 		}catch(Exception e) {}
 		if(b==false) {
-			new Actions(dr).sendKeys(Keys.BACK_SPACE);
+			new Actions(drvr).sendKeys(Keys.BACK_SPACE);
 		}
-		waitForElementVisible(cityList);
-		cityList.click();
+		waitForElementVisible(listOfCity);
+		listOfCity.click();
 		
 	}
 	
 	public void enterDate(String dt)
 	{
 
-		Date dat=new Date();
+		Date curdat=new Date();
 		SimpleDateFormat sft = new SimpleDateFormat("yyyy/MM/dd");
-		String s=sft.format(dat);
+		String s=sft.format(curdat);
 		date.sendKeys(s);
 	}
 	public void enterArea(String a) {
 		area.sendKeys(a);
 	}
 	public void enterAddress(String addr) {
-		address.sendKeys(addr);
+		addrs.sendKeys(addr);
 	}
 	public void otherBasicDetails(String addr,String date, String city,String state, String country, String a) throws InterruptedException {
 		enterCountry(country);
@@ -176,36 +176,36 @@ public class CreateProject {
 		next.click();
 	}
 	
-	private void clickOnCommercialBuilding() {
+	private void clickOnCommercialProperty() {
 		commercialBuilding.click();
 	}
-	private void clickOnMall() {
+	private void selectRadioTypeMAll() {
 		mall.click();
 	}
 	
 	public void selectBuildingClass() {
-		clickOnCommercialBuilding();
-		clickOnMall();
+		clickOnCommercialProperty();
+		selectRadioTypeMAll();
 	}
 	
 	public void clickOnFinish() {
 		waitForElementClickable(finish);
-		new Actions(dr).pause(10000).perform();
+		new Actions(drvr).pause(10000).perform();
 		finish.click();
 	}
 	public void waitForElementVisible(WebElement element) {
 		
-		WebDriverWait wait=new WebDriverWait(dr, 10);
+		WebDriverWait wait=new WebDriverWait(drvr, 10);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 public void waitForElementClickable(WebElement element) {
 		
-		WebDriverWait wait=new WebDriverWait(dr, 10);
+		WebDriverWait wait=new WebDriverWait(drvr, 10);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 	
 public String readProjectName() {
-	return project;
+	return prjct;
 }
 
 }
